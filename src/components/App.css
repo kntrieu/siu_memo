@@ -1,0 +1,23 @@
+.siu-container {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.siu-container .siu-navbar {
+  background-color: cornflowerblue !important;
+}
+
+.siu-container .siu-dashboard {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px;
+}
+
+.siu-dashboard .siu-memo-list .siu-memo-item:hover {
+  cursor: pointer;
+  background-color: cornflowerblue; 
+}
+
+.siu-dashboard .siu-memo-list .siu-memo-item {
+  margin-top: 15px;
+}
