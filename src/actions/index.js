@@ -28,3 +28,11 @@ export const editMemo = (memo) => {
         payload: memo
     }
 }
+
+
+export const saveMemo = (memo) => {
+    return {
+        type: actionTypes.SAVE_MEMO,
+        payload: memo
+    }
+}

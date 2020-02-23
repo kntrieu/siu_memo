@@ -1,6 +1,12 @@
 .siu-container {
   padding-left: 0px !important;
   padding-right: 0px !important;
+  overflow-x: hidden;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  background-image: url('../images/board.jpg');
+  background-size: cover;
 }
 
 .siu-container .siu-navbar {
@@ -15,8 +21,11 @@
 
 .siu-dashboard .siu-memo-list .siu-memo-item:hover {
   cursor: pointer;
+  background-color: cornsilk;
 }
 
 .siu-dashboard .siu-memo-list .siu-memo-item {
   margin-top: 15px;
+  background-color: bisque;
+  transition: 0.3s;
 }

@@ -18,24 +18,17 @@ const memos = [
 const memoReducer = (state = memos, action) => {
     switch (action.type) {
         case actionTypes.ADD_NEW_MEMO:
-            
             return [...state, action.payload];
-        case actionTypes.EDIT_MEMO:
-            return state.map ((item, index) => {
+        case actionTypes.SAVE_MEMO:
+            return state.map((item) => {
                 if (item.id !== action.payload.id) {
-                    return item
+                    return item;
                 }
-
-                let a = {...item, ...action.payload};
-
-                console.log(a);
 
                 return {
-                    ...item,
-                    ...action.payload
+                    ...item, ...action.payload
                 }
             })
-           
         default: 
             return state;
     }
