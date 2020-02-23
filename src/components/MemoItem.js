@@ -94,6 +94,7 @@ class MemoItem extends Component {
                         <Button variant="secondary" onClick={()=> {this.handleClose()}}>Close</Button>
                         {editButton}
                         {saveChangesButton}
+                        
                     </Modal.Footer>
                 </Modal>
             </>
