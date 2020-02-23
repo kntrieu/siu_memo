@@ -1,4 +1,5 @@
 import actionTypes from './actionTypes';
+import MemoModel from '../models/MemoModel'
 
 
 
@@ -6,22 +7,24 @@ import actionTypes from './actionTypes';
 
 //Add new memo
 export const addNewMemo = () => {
+    let newMemo = new MemoModel({});
     return {
         type: actionTypes.ADD_NEW_MEMO,
-        payload: {
-            id: 3,
-            name: "New memo",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-            created_date: "2020-02-21T06:45:58.022Z",
-        }
+        payload: newMemo
     }
 }
 
 
 export const selectMemo = (memo) => {
-    console.log(memo);
     return {
         type: actionTypes.SELECT_MEMO,
+        payload: memo
+    }
+}
+
+export const editMemo = (memo) => {
+    return {
+        type: actionTypes.EDIT_MEMO,
         payload: memo
     }
 }

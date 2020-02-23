@@ -3,9 +3,8 @@ import actionTypes from '../actions/actionTypes';
 const selectedMemoReducer = (state = null, action) => {
     switch (action.type) {
         case actionTypes.SELECT_MEMO:
-            
             return action.payload;
-        default: 
+        default:
             return state;
     }
 }
