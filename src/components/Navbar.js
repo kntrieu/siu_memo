@@ -10,7 +10,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-dark navbar-expand-lg bg-success siu-navbar">
                 <a className="navbar-brand" href="/#">SIU Memo</a>
                 <form className="form-inline">
-                    <button className="btn btn-sm btn-success" onClick={() => {this.props.addNewMemo()} } type="button">Add new memo</button>
+                    <button className="btn btn-sm btn-success" onClick={() => {this.props.addNewMemo()} } type="button"><i className="fas fa-plus-square"></i> Add new memo</button>
                 </form>
             </nav>
         );

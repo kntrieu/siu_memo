@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {selectMemo} from '../actions';
 import {editMemo} from '../actions';
 import {saveMemo} from '../actions';
+import {deleteMemo} from '../actions';
 import moment from 'moment';
 import MemoModel from '../models/MemoModel';
 import { Modal } from 'react-bootstrap';
@@ -11,17 +12,6 @@ import { Button } from 'react-bootstrap';
 
 class MemoItem extends Component {
     
-    onTitleChange (event, memo) {
-        
-        let titleValue = event.target.value;
-
-        let editMemoModel = new MemoModel(memo);
-
-        editMemoModel.name = titleValue;
-
-        this.props.editMemo(editMemoModel);
-    }
-
     onMemoChange (event, memo) {
 
         let propertyName = event.target.id;
@@ -37,7 +27,6 @@ class MemoItem extends Component {
         isEdit: false
     }
 
-    
 
     handleClickMemo (memo) {
         this.props.selectMemo(memo);
@@ -64,6 +53,10 @@ class MemoItem extends Component {
         this.handleClose();
     }
 
+    handleDelete (event, memo) {
+        this.props.deleteMemo(memo);
+    }
+
     render () {
         let date_created = new moment(this.props.memo.created_date).format("DD/MM/YYYY HH:mm");
 
@@ -71,7 +64,10 @@ class MemoItem extends Component {
         let saveChangesButton = this.state.isEdit ? <Button variant="primary" onClick={(event)=> {this.handleSave(this.props.selectedMemo)}}>Save change</Button> : "";
 
         //Define popup's edit button
-        let editButton = !this.state.isEdit ? <Button variant="success" onClick={(event)=> {this.handleEdit(event)}}>Edit</Button> : "";
+        let editButton = !this.state.isEdit ? <Button variant="success" onClick={(event)=> {this.handleEdit(event)}}><i className="fas fa-edit"></i> Edit</Button> : "";
+
+        //Delete button
+        let deleteButton = <Button variant="danger" onClick={(event)=> {this.handleDelete(event, this.props.selectedMemo)}}><i className="fas fa-trash-alt"></i> Delete</Button>
 
         //Define popup title
         let popupTitle = "";
@@ -91,7 +87,7 @@ class MemoItem extends Component {
 
         return (
             <>
-                <div className="siu-memo-item card" title="Click to view" onClick={() => { this.handleClickMemo(this.props.memo) }}>
+                <div className="siu-memo-item card" onClick={() => { this.handleClickMemo(this.props.memo) }}>
                     <div className="card-body">
                         <h5 className="card-title">{this.props.memo.name}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">Created date: {date_created}</h6>
@@ -108,6 +104,7 @@ class MemoItem extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={()=> {this.handleClose()}}>Close</Button>
+                        {deleteButton}
                         {editButton}
                         {saveChangesButton}
                     </Modal.Footer>
@@ -124,7 +121,12 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({selectMemo: selectMemo, editMemo: editMemo, saveMemo: saveMemo}, dispatch);
+    return bindActionCreators({
+        selectMemo: selectMemo, 
+        editMemo: editMemo, 
+        saveMemo: saveMemo,
+        deleteMemo: deleteMemo
+    }, dispatch);
 }
 
 let MemoItemComponent = connect(mapStateToProps, mapDispatchToProps)(MemoItem);
