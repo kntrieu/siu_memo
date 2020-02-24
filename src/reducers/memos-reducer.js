@@ -18,6 +18,7 @@ const memos = [
 const memoReducer = (state = memos, action) => {
     switch (action.type) {
         case actionTypes.ADD_NEW_MEMO:
+            action.payload.id = state.length + 1;
             return [...state, action.payload];
         case actionTypes.SAVE_MEMO:
             return state.map((item) => {
