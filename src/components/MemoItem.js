@@ -53,6 +53,10 @@ class MemoItem extends Component {
         this.handleClose();
     }
 
+    handleOnHide() {
+
+    }
+
     handleDelete (event, memo) {
         this.props.deleteMemo(memo);
     }
@@ -95,7 +99,7 @@ class MemoItem extends Component {
                     </div>
                 </div>
 
-                <Modal show={this.state.showModal} onHide={this.handleClose}>
+                <Modal show={this.state.showModal} onHide={this.handleOnHide}>
                     <Modal.Header>
                         {popupTitle}
                     </Modal.Header>
@@ -103,7 +107,7 @@ class MemoItem extends Component {
                         {popupContent}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={()=> {this.handleClose()}}>Close</Button>
+                        <Button variant="secondary" onClick={()=> {this.handleClose()}}><i className="fas fa-window-close"></i> Close</Button>
                         {deleteButton}
                         {editButton}
                         {saveChangesButton}
