@@ -27,3 +27,7 @@
   background-color: bisque;
   transition: 0.3s;
 }
+
+.siu-memo-item .card-text {
+  white-space: pre-wrap;
+}

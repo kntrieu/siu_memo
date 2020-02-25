@@ -45,7 +45,7 @@ class MemoItem extends Component {
                     <div className="card-body">
                         <h5 className="card-title">{this.props.memo.name}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">Created date: {date_created}</h6>
-                        <p className="card-text">{this.props.memo.content}</p>
+                        <div className="card-text">{this.props.memo.content}</div>
                     </div>
                 </div>
             </>
