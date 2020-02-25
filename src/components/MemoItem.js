@@ -9,6 +9,8 @@ import moment from 'moment';
 import MemoModel from '../models/MemoModel';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import {saveMemoItem} from '../services/memos-service';
+import {showEditPopup} from '../actions'
 
 class MemoItem extends Component {
     
@@ -30,64 +32,12 @@ class MemoItem extends Component {
 
     handleClickMemo (memo) {
         this.props.selectMemo(memo);
-
-        //open popup
-        this.setState({showModal: true});
+        this.props.showEditPopup(memo);
     }
 
-    handleClose (event) {
-        this.setState({
-            showModal: false,
-            isEdit: false
-        });
-    }
-
-
-    handleEdit (event, memo) {
-        this.setState({isEdit: true});
-    }
-
-    handleSave (memo) {
-        this.props.saveMemo(memo);
-
-        this.handleClose();
-    }
-
-    handleOnHide() {
-
-    }
-
-    handleDelete (event, memo) {
-        this.props.deleteMemo(memo);
-    }
 
     render () {
         let date_created = new moment(this.props.memo.created_date).format("DD/MM/YYYY HH:mm");
-
-        //Define popup's saveChange button
-        let saveChangesButton = this.state.isEdit ? <Button variant="primary" onClick={(event)=> {this.handleSave(this.props.selectedMemo)}}>Save change</Button> : "";
-
-        //Define popup's edit button
-        let editButton = !this.state.isEdit ? <Button variant="success" onClick={(event)=> {this.handleEdit(event)}}><i className="fas fa-edit"></i> Edit</Button> : "";
-
-        //Delete button
-        let deleteButton = <Button variant="danger" onClick={(event)=> {this.handleDelete(event, this.props.selectedMemo)}}><i className="fas fa-trash-alt"></i> Delete</Button>
-
-        //Define popup title
-        let popupTitle = "";
-        let popupContent = "";
-
-        if (this.state.isEdit) {
-            popupTitle = <div className="form-group">
-                            <input id="name" className="form-control" onChange={(event) => {this.onMemoChange(event, this.props.selectedMemo)}} type="text" placeholder="Enter memo title" value={this.props.selectedMemo.name} />
-                         </div>;
-            popupContent = <div className="form-group">
-                                <textarea id="content" className="form-control" onChange={(event) => {this.onMemoChange(event, this.props.selectedMemo)}} value={this.props.selectedMemo.content}></textarea>
-                           </div>
-        } else {
-            popupTitle = <Modal.Title>{this.props.selectedMemo ? this.props.selectedMemo.name : ""}</Modal.Title>
-            popupContent = this.props.selectedMemo ? this.props.selectedMemo.content : "";
-        }
 
         return (
             <>
@@ -98,21 +48,6 @@ class MemoItem extends Component {
                         <p className="card-text">{this.props.memo.content}</p>
                     </div>
                 </div>
-
-                <Modal show={this.state.showModal} onHide={this.handleOnHide}>
-                    <Modal.Header>
-                        {popupTitle}
-                    </Modal.Header>
-                    <Modal.Body>
-                        {popupContent}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={()=> {this.handleClose()}}><i className="fas fa-window-close"></i> Close</Button>
-                        {deleteButton}
-                        {editButton}
-                        {saveChangesButton}
-                    </Modal.Footer>
-                </Modal>
             </>
         )
     }
@@ -129,7 +64,9 @@ function mapDispatchToProps(dispatch) {
         selectMemo: selectMemo, 
         editMemo: editMemo, 
         saveMemo: saveMemo,
-        deleteMemo: deleteMemo
+        deleteMemo: deleteMemo,
+        saveMemoItem: saveMemoItem,
+        showEditPopup: showEditPopup
     }, dispatch);
 }
 

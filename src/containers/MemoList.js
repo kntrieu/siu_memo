@@ -1,19 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import MemoItemComponent from '../components/MemoItem'
+import MemoItemComponent from '../components/MemoItem';
+import {fetchMemos} from '../services/memos-service';
+import {getMemosError, getMemos, getMemosPending} from '../reducers/memos-reducer';
+import {bindActionCreators} from 'redux';
+
 
 class MemoList extends Component {
+
+    componentWillMount() {
+        const {fetchMemos} = this.props;
+        fetchMemos();
+    }
+
     createMemoListItems () {
-        let listItems = this.props.memos.map((item) => {
+        let listItems = [];
+        listItems = this.props.memos.map((item) => {
             return (
-                <div className="col-lg-3 col-sm-6 siu-memo-list" key={item.id}>
+                <div className="col-lg-3 col-sm-6 siu-memo-list" key={item._id}>
                     <MemoItemComponent memo={item}/>
                 </div>
             )
         });
-
+        
         return listItems;
     }
+
+
     render () {
         return (
             this.createMemoListItems ()
@@ -24,10 +37,15 @@ class MemoList extends Component {
 
 function mapStateToProps(state) {
     return {
-        memos: state.memos
+        memos: getMemos(state),
+        pending: getMemosPending(state)
     }
 }
 
-let MemoContainer = connect(mapStateToProps)(MemoList);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({fetchMemos: fetchMemos}, dispatch);
+}
+
+let MemoContainer = connect(mapStateToProps, mapDispatchToProps)(MemoList);
 
 export default MemoContainer;
