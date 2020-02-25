@@ -1,3 +1,3 @@
 export const configObj = {
-    serviceBaseURL: "http://localhost:3030"
+    serviceBaseURL: "https://siu-memo-be.herokuapp.com/"
 }
