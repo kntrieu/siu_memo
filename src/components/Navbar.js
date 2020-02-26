@@ -13,7 +13,7 @@ class Navbar extends Component {
     render () {
         return (
             <nav className="navbar navbar-dark navbar-expand-lg bg-success siu-navbar">
-                <a className="navbar-brand" href="/#">SIU Memo</a>
+                <a className="navbar-brand" href="/#">Simple Memo App</a>
                 <form className="form-inline">
                     <button className="btn btn-sm btn-success" onClick={() => {this.handleClickAddNew()} } type="button"><i className="fas fa-plus-square"></i> Add new memo</button>
                 </form>
