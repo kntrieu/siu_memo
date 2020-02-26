@@ -14,6 +14,7 @@ import {
 } from '../actions';
 
 import {configObj} from "../configs";
+import MemoModel from '../models/MemoModel';
 
 let baseUrl = configObj.serviceBaseURL;
 
@@ -27,7 +28,10 @@ export const fetchMemos = () => {
             if(res.error) {
                 throw(res.error);
             }
-            dispatch(fetchMemosSuccess(res));
+            let memoList = res.map( memo => {
+                return new MemoModel(memo);
+            });
+            dispatch(fetchMemosSuccess(memoList));
             return res;
         })
         .catch(error => {

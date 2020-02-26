@@ -31,3 +31,9 @@
 .siu-memo-item .card-text {
   white-space: pre-wrap;
 }
+
+.siu-memo-item .close-button {
+  position: absolute;
+  top: 0;
+  right: 5px;
+}

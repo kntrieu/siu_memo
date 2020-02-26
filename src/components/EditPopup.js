@@ -56,6 +56,18 @@ class EditPopup extends Component {
         }
     }
 
+    showFrom (memo) {
+        if (memo) {
+            return <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter creator's name" value={memo.from} />
+        }
+    } 
+
+    showTo (memo) {
+        if (memo) {
+            return <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter Receiver's name" value={memo.to} />
+        }
+    }
+
     render () {
         let deletebutton = this.props.editPopupData.isEdit ? <Button variant="danger" onClick={(event)=> {this.handleDelete(event, this.props.editPopupData.memo)}}><i className="fas fa-trash-alt"></i> Delete</Button> : "";
         return (
@@ -66,6 +78,12 @@ class EditPopup extends Component {
                     </div>
                 </Modal.Header>
                 <Modal.Body>
+                    <div className="form-group">
+                        {this.showFrom(this.props.editPopupData.memo)}
+                    </div>
+                    <div className="form-group">
+                        {this.showTo(this.props.editPopupData.memo)}
+                    </div>
                     <div className="form-group">
                         {this.showContent (this.props.editPopupData.memo)}
                     </div>

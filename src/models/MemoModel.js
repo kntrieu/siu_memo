@@ -5,6 +5,8 @@ class MemoModel {
         this.name = data.name ? data.name : "";
         this.content = data.content ? data.content : "";
         this.created_date = data.created_date ? data.created_date : created_date;
+        this.from = data.from ? data.from : "";
+        this.to = data.to ? data.to : "";
     }
 }
 

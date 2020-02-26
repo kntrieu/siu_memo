@@ -7,10 +7,9 @@ import {saveMemo} from '../actions';
 import {deleteMemo} from '../actions';
 import moment from 'moment';
 import MemoModel from '../models/MemoModel';
-import { Modal } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 import {saveMemoItem} from '../services/memos-service';
-import {showEditPopup} from '../actions'
+import {showEditPopup} from '../actions';
+import {deleteMemoItem} from '../services/memos-service';
 
 class MemoItem extends Component {
     constructor(props) {
@@ -32,20 +31,34 @@ class MemoItem extends Component {
     }
 
 
-    handleClickMemo (memo) {
-        this.props.selectMemo(memo);
-        this.props.showEditPopup(memo);
+    handleClickMemo (event, memo) {
+        if (event.target.id !== "closeBtn") {
+            this.props.selectMemo(memo);
+            this.props.showEditPopup(memo);
+        } else {
+            this.props.deleteMemoItem(memo);
+        }
+        
     }
 
 
     render () {
         let date_created = moment(this.props.memo.created_date).format("DD/MM/YYYY HH:mm");
+        let from = this.props.memo.from;
+        let to = this.props.memo.to;
         return (
             <>
-                <div className="siu-memo-item card" onClick={() => { this.handleClickMemo(this.props.memo) }}>
+                <div className="siu-memo-item card" onClick={(event) => { this.handleClickMemo(event,this.props.memo) }}>
+                    <div className="card-header">
+                        <h5>{this.props.memo.name}</h5>
+                        <button type="button" className="close close-button" aria-label="Close">
+                            <span aria-hidden="true" id="closeBtn">&times;</span>
+                        </button>
+                    </div>
                     <div className="card-body">
-                        <h5 className="card-title">{this.props.memo.name}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">Created date: {date_created}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">From: {from}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">To: {to}</h6>
                         <div className="card-text">{this.props.memo.content}</div>
                     </div>
                 </div>
@@ -62,7 +75,8 @@ function mapDispatchToProps(dispatch) {
         saveMemo: saveMemo,
         deleteMemo: deleteMemo,
         saveMemoItem: saveMemoItem,
-        showEditPopup: showEditPopup
+        showEditPopup: showEditPopup,
+        deleteMemoItem: deleteMemoItem
     }, dispatch);
 }
 
