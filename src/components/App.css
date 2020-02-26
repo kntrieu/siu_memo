@@ -5,10 +5,13 @@
   position: fixed;
   height: 100%;
   overflow-y: auto;
+  /* background-image: url('../images/board.jpg');
+  background-size: cover;
+  background-position: center; */
 }
 
 .siu-container .siu-navbar {
-  background-color: cornflowerblue !important;
+  background-color: #8a3bc4  !important;
 }
 
 .siu-container .siu-dashboard {
@@ -24,12 +27,16 @@
 
 .siu-dashboard .siu-memo-list .siu-memo-item {
   margin-top: 15px;
-  background-color: bisque;
+  background-color: #edffd7;
   transition: 0.3s;
 }
 
 .siu-memo-item .card-text {
   white-space: pre-wrap;
+}
+
+.siu-memo-item {
+  box-shadow: #545b62 2px 1.5px 5px 0px;
 }
 
 .siu-memo-item .close-button {
