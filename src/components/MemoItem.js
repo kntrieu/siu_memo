@@ -13,7 +13,9 @@ import {saveMemoItem} from '../services/memos-service';
 import {showEditPopup} from '../actions'
 
 class MemoItem extends Component {
-    
+    constructor(props) {
+        super(props);
+    }
     onMemoChange (event, memo) {
 
         let propertyName = event.target.id;
@@ -37,8 +39,7 @@ class MemoItem extends Component {
 
 
     render () {
-        let date_created = new moment(this.props.memo.created_date).format("DD/MM/YYYY HH:mm");
-
+        let date_created = moment(this.props.memo.created_date).format("DD/MM/YYYY HH:mm");
         return (
             <>
                 <div className="siu-memo-item card" onClick={() => { this.handleClickMemo(this.props.memo) }}>
@@ -53,11 +54,6 @@ class MemoItem extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        selectedMemo: state.selectedMemo
-    }
-}
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
@@ -70,5 +66,5 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-let MemoItemComponent = connect(mapStateToProps, mapDispatchToProps)(MemoItem);
+let MemoItemComponent = connect(null, mapDispatchToProps)(MemoItem);
 export default MemoItemComponent;
