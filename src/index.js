@@ -10,13 +10,23 @@ import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
 
 import {Provider} from 'react-redux';
+import WelcomeContainer from './components/Welcome';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import Login from './components/Login';
 
 const middlewares = [thunk];
 
 
 const store = createStore(allReducers, applyMiddleware(...middlewares));
 
-ReactDOM.render(<Provider store={store}><App/></Provider>,document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <Router>
+            <Route exact path="/" component={WelcomeContainer} />
+            <Route exact path="/dashboard" component={App} />
+            <Route exact path="/login" component={Login} />
+        </Router>
+    </Provider>,document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

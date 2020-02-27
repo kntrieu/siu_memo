@@ -10,7 +10,10 @@ import {
     deleteMemoError,
     addMemoPending,
     addMemoSuccess,
-    addMemoError
+    addMemoError,
+    setLoginPending,
+    setLoginSuccess,
+    setLoginError
 } from '../actions';
 
 import {configObj} from "../configs";
@@ -104,3 +107,30 @@ export const addMemoItem = (memo) => {
         })
     }
 }
+
+function callLoginApi(email, password, callback) {
+    setTimeout(() => {
+        if (email === 'admin@example.com' && password === 'admin') {
+            return callback(null);
+        } else {
+            return callback(new Error('Invalid email and password'));
+        }
+    }, 1000);
+}
+
+export const login = (email, password) => {
+    return dispatch => {
+      dispatch(setLoginPending(true));
+      dispatch(setLoginSuccess(false));
+      dispatch(setLoginError(null));
+  
+      callLoginApi(email, password, error => {
+        dispatch(setLoginPending(false));
+        if (!error) {
+          dispatch(setLoginSuccess(true));
+        } else {
+          dispatch(setLoginError(error));
+        }
+      });
+    }
+  }

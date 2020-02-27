@@ -44,3 +44,40 @@
   top: 0;
   right: 5px;
 }
+
+.welcome {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: url('../images/welcome.JPG');
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.login {
+  display: table;
+}
+
+.welcome .login-form {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.login-form .login-form-content {
+  width: 30%;
+  min-width: 300px;
+  margin: auto;
+}
+
+.welcome .welcome-text {
+  text-align: center;
+}
+
+.welcome .welcome-row {
+  margin-top: 15%;
+}
+
+.welcome .welcome-btn {
+  width: 200px;
+}

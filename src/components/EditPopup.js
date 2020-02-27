@@ -46,25 +46,53 @@ class EditPopup extends Component {
 
     showTitle (memo) {
         if (memo) {
-            return <input id="name" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter memo title" value={memo.name} />
+            return (
+                <>
+                    <input id="name" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter memo title" value={memo.name} />
+                    <small id="nameValid" class="form-text text-danger">
+                        Please enter memo's title
+                    </small>
+                </>
+            )
         } 
     }
 
     showContent (memo) {
         if (memo) {
-            return <textarea id="content" className="form-control" placeholder="Enter memo content" onChange={(event) => {this.onMemoChange(event, memo)}} value={memo.content}></textarea>
+            return (
+                <>
+                    <textarea id="content" className="form-control" placeholder="Enter memo content" onChange={(event) => {this.onMemoChange(event, memo)}} value={memo.content}></textarea>
+                    <small id="contentValid" class="form-text text-danger">
+                        Please enter memo's content
+                    </small>
+                </>
+            );
         }
     }
 
     showFrom (memo) {
         if (memo) {
-            return <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter creator's name" value={memo.from} />
+            return (
+                <>
+                    <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter creator's name" value={memo.from} />
+                    <small id="contentValid" class="form-text text-danger">
+                        Please enter creator's name
+                    </small>
+                </>
+            )
         }
     } 
 
     showTo (memo) {
         if (memo) {
-            return <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter Receiver's name" value={memo.to} />
+            return (
+                <>
+                    <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter Receiver's name" value={memo.to} />
+                    <small id="contentValid" class="form-text text-danger">
+                        Please enter Receiver's name
+                    </small>
+                </>
+            )
         }
     }
 

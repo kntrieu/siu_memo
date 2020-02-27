@@ -161,3 +161,25 @@ export const showAddNewPopup = (memo) => {
 }
 
 
+export const setLoginPending = (isLoginPending) => {
+    return {
+        type: actionTypes.SET_LOGIN_PENDING,
+        payload: isLoginPending
+    };
+}
+
+export const setLoginSuccess = (isLoginSuccess) => {
+    return {
+        type: actionTypes.SET_LOGIN_SUCCESS,
+        payload: isLoginSuccess
+    };
+}
+
+export const setLoginError = (loginError) => {
+    return {
+        type: actionTypes.SET_LOGIN_ERROR,
+        payload: loginError
+    };
+}
+
+
