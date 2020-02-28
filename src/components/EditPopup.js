@@ -13,20 +13,39 @@ import {editMemo} from '../actions'
 
 class EditPopup extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isInvalidName: false,
+            isInvalidReceiver: false,
+            isInvalidContent: false,
+        }
+    }
+
     handleClose() {
         this.props.hideEditPopup();
     }
 
     handleSave(memo) {
-        if (this.props.editPopupData.isEdit) {
-            this.props.saveMemoItem(memo, this.props.loginReducer.accessToken);
-        } else {
-            if (memo.name !== "" || memo.content !== "") {
-                this.props.addMemoItem(memo, this.props.loginReducer.accessToken);
+        if (memo.name !== "" && memo.to !== "" && memo.content !== "") {
+            if (this.props.editPopupData.isEdit) {
+                this.props.saveMemoItem(memo, this.props.loginReducer.accessToken);
+            } else {
+                if (memo.name !== "" || memo.content !== "") {
+                    this.props.addMemoItem(memo, this.props.loginReducer.accessToken);
+                }
             }
+            
+            this.handleClose();
+        } else {
+            this.setState({
+                isInvalidName: memo.name === "" ? true : false,
+                isInvalidReceiver: memo.to === "" ? true : false,
+                isInvalidContent: memo.content === "" ? true : false,
+            })
         }
         
-        this.handleClose();
     }
 
     handleDelete(event,memo) {
@@ -49,9 +68,7 @@ class EditPopup extends Component {
             return (
                 <>
                     <input id="name" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter memo title" value={memo.name} />
-                    {/* <small id="nameValid" className="form-text text-danger">
-                        Please enter memo's title
-                    </small> */}
+                    { this.state.isInvalidName ? <small className="form-text text-danger">Please enter memo's title</small> : null }
                 </>
             )
         } else {
@@ -65,9 +82,7 @@ class EditPopup extends Component {
             return (
                 <>
                     <textarea id="content" className="form-control" placeholder="Enter memo content" onChange={(event) => {this.onMemoChange(event, memo)}} value={memo.content}></textarea>
-                    {/* <small id="contentValid" className="form-text text-danger">
-                        Please enter memo's content
-                    </small> */}
+                    { this.state.isInvalidContent ? <small className="form-text text-danger">Please enter memo's content</small> : null }
                 </>
             );
         } else {
@@ -95,9 +110,7 @@ class EditPopup extends Component {
             return (
                 <>
                     <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter Receiver's name" value={memo.to} />
-                    {/* <small id="contentValid" className="form-text text-danger">
-                        Please enter Receiver's name
-                    </small> */}
+                    { this.state.isInvalidReceiver ? <small className="form-text text-danger">Please enter receiver</small> : null }
                 </>
             )
         } else {

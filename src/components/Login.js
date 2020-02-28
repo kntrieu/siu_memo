@@ -9,17 +9,40 @@ import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isInvalidEmail: false,
+            isInvalidPassword: false
+        }
+    }
+
     handleClickLogin () {
         let email = document.getElementById('inputEmail').value;
-        let password = document.getElementById('inputPassword').value
-        this.props.login(email, password);
+        let password = document.getElementById('inputPassword').value;
+
+        if (email !== "" && password !== "") {
+            this.props.login(email, password);
+            this.setState({
+                isInvalidEmail: false,
+                isInvalidPassword: false
+            });
+        } else {
+            this.setState({
+                isInvalidEmail: email === "" ? true : false,
+                isInvalidPassword: password === "" ? true : false
+             });
+
+
+            
+        }
     }
 
     handleRendering () {
         let container = "";
         let errorText = "";
         if (this.props.loginReducer.loginError) {
-            errorText = <small id="errorText" className="form-text text-danger">
+            errorText = <small id="errorText" className="form-text">
             Email or password is incorrect
         </small>
         }
@@ -29,9 +52,17 @@ class Login extends Component {
                     <div className="login-form-content">
                         <div className="form-group">
                             <input type="email" className="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" />
+
+                            { this.state.isInvalidEmail ? <small className="form-text">
+                                Please enter email
+                            </small> : null }
+                            
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" id="inputPassword" placeholder="Password" />
+                            <input type="password" className="form-control" id="inputPassword" placeholder="Enter Password" />
+                            { this.state.isInvalidPassword ? <small className="form-text">
+                                Please enter password
+                            </small> : null }
                         </div>
                         <button type="submit" onClick={() => { this.handleClickLogin() }} className="btn btn-primary btn-block">Submit</button>
                         <a type="button" href="/dashboard" className="btn btn-success btn-block">Go to dashboard</a>

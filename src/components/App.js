@@ -19,7 +19,7 @@ class App extends React.Component {
       } else if (loginInfo.isLoginPending) {
         this.props.setLoginPending(loginInfo.isLoginPending);
       } else if (loginInfo.loginError) {
-        this.props.setLoginError(loginInfo.loginError);
+        this.props.setLoginError(loginInfo.loginError, false);
       }
 
     }

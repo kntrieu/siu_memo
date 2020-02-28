@@ -175,10 +175,10 @@ export const setLoginSuccess = (res) => {
     };
 }
 
-export const setLoginError = (loginError) => {
+export const setLoginError = (loginError, reset) => {
     return {
         type: actionTypes.SET_LOGIN_ERROR,
-        payload: true
+        payload: reset !== undefined ? reset : true
     };
 }
 
