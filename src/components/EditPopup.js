@@ -19,10 +19,10 @@ class EditPopup extends Component {
 
     handleSave(memo) {
         if (this.props.editPopupData.isEdit) {
-            this.props.saveMemoItem(memo);
+            this.props.saveMemoItem(memo, this.props.loginReducer.accessToken);
         } else {
             if (memo.name !== "" || memo.content !== "") {
-                this.props.addMemoItem(memo)
+                this.props.addMemoItem(memo, this.props.loginReducer.accessToken);
             }
         }
         
@@ -30,7 +30,7 @@ class EditPopup extends Component {
     }
 
     handleDelete(event,memo) {
-        this.props.deleteMemoItem(memo);
+        this.props.deleteMemoItem(memo, this.props.loginReducer.accessToken);
         this.handleClose();
     }
 
@@ -45,59 +45,76 @@ class EditPopup extends Component {
     }
 
     showTitle (memo) {
-        if (memo) {
+        if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
                     <input id="name" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter memo title" value={memo.name} />
-                    <small id="nameValid" class="form-text text-danger">
+                    {/* <small id="nameValid" className="form-text text-danger">
                         Please enter memo's title
-                    </small>
+                    </small> */}
                 </>
             )
-        } 
+        } else {
+            return <h5 className="modal-title">{memo ? memo.name : ""}</h5>
+            
+        }
     }
 
     showContent (memo) {
-        if (memo) {
+        if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
                     <textarea id="content" className="form-control" placeholder="Enter memo content" onChange={(event) => {this.onMemoChange(event, memo)}} value={memo.content}></textarea>
-                    <small id="contentValid" class="form-text text-danger">
+                    {/* <small id="contentValid" className="form-text text-danger">
                         Please enter memo's content
-                    </small>
+                    </small> */}
                 </>
             );
+        } else {
+            return <p>{memo ? memo.content : ""}</p>
         }
     }
 
     showFrom (memo) {
-        if (memo) {
+        if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
-                    <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter creator's name" value={memo.from} />
-                    <small id="contentValid" class="form-text text-danger">
+                    <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} readOnly={true} type="text" placeholder="Enter creator's name" value={memo.from} />
+                    {/* <small id="contentValid" className="form-text text-danger">
                         Please enter creator's name
-                    </small>
+                    </small> */}
                 </>
             )
+        } else {
+            return <h6>{memo ? "From: " + memo.from : ""}</h6>
         }
     } 
 
     showTo (memo) {
-        if (memo) {
+        if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
                     <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter Receiver's name" value={memo.to} />
-                    <small id="contentValid" class="form-text text-danger">
+                    {/* <small id="contentValid" className="form-text text-danger">
                         Please enter Receiver's name
-                    </small>
+                    </small> */}
                 </>
             )
+        } else {
+            return <h6>{memo ? "To: " + memo.from : ""}</h6>
         }
     }
 
     render () {
-        let deletebutton = this.props.editPopupData.isEdit ? <Button variant="danger" onClick={(event)=> {this.handleDelete(event, this.props.editPopupData.memo)}}><i className="fas fa-trash-alt"></i> Delete</Button> : "";
+        let deletebutton = this.props.editPopupData.isEdit && this.props.loginReducer.isLoginSuccess ? 
+                        <Button variant="danger" onClick={(event)=> {this.handleDelete(event, this.props.editPopupData.memo)}}>
+                            <i className="fas fa-trash-alt"></i> Delete
+                        </Button> : "";
+
+        let saveButton = this.props.loginReducer.isLoginSuccess ? 
+                        <Button variant="primary" onClick={(event)=> {this.handleSave(this.props.editPopupData.memo)}}>
+                                <i className="fas fa-save"></i> Save
+                        </Button> : "";
         return (
             <Modal show={this.props.editPopupData.isShow} onHide={this.props.hideEditPopup}>
                 <Modal.Header>
@@ -118,7 +135,7 @@ class EditPopup extends Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={()=> {this.handleClose()}}><i className="fas fa-window-close"></i> Close</Button>
-                    <Button variant="primary" onClick={(event)=> {this.handleSave(this.props.editPopupData.memo)}}><i className="fas fa-save"></i> Save</Button>
+                    {saveButton}
                     {deletebutton}
                 </Modal.Footer>
             </Modal>
@@ -128,7 +145,8 @@ class EditPopup extends Component {
 
 function mapStateToProps(state) {
     return {
-        editPopupData: state.editPopup
+        editPopupData: state.editPopup,
+        loginReducer: state.loginReducer
     }
 }
 

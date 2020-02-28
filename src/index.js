@@ -20,13 +20,12 @@ const middlewares = [thunk];
 const store = createStore(allReducers, applyMiddleware(...middlewares));
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Router>
-            <Route exact path="/" component={WelcomeContainer} />
-            <Route exact path="/dashboard" component={App} />
-            <Route exact path="/login" component={Login} />
-        </Router>
-    </Provider>,document.getElementById('root'));
+        <Provider store={store}>
+            <Router>
+                <App/>
+            </Router>
+        </Provider>, document.getElementById('root'));
+    
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

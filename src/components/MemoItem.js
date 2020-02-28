@@ -36,7 +36,7 @@ class MemoItem extends Component {
             this.props.selectMemo(memo);
             this.props.showEditPopup(memo);
         } else {
-            this.props.deleteMemoItem(memo);
+            this.props.deleteMemoItem(memo, this.props.loginReducer.accessToken);
         }
         
     }
@@ -46,14 +46,20 @@ class MemoItem extends Component {
         let date_created = moment(this.props.memo.created_date).format("DD/MM/YYYY HH:mm");
         let from = this.props.memo.from;
         let to = this.props.memo.to;
+        let closeButton = "";
+        if (this.props.loginReducer.isLoginSuccess) {
+            closeButton = 
+            <button type="button" className="close close-button" aria-label="Close">
+                <span aria-hidden="true" id="closeBtn">&times;</span>
+            </button>;
+        }
         return (
             <>
                 <div className="siu-memo-item card" onClick={(event) => { this.handleClickMemo(event,this.props.memo) }}>
                     <div className="card-header">
                         <h5>{this.props.memo.name}</h5>
-                        <button type="button" className="close close-button" aria-label="Close">
-                            <span aria-hidden="true" id="closeBtn">&times;</span>
-                        </button>
+                        {closeButton}
+
                     </div>
                     <div className="card-body">
                         <h6 className="card-subtitle mb-2 text-muted">Created date: {date_created}</h6>
@@ -80,5 +86,11 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-let MemoItemComponent = connect(null, mapDispatchToProps)(MemoItem);
+function mapStateToProp (state) {
+    return {
+        loginReducer: state.loginReducer
+    }
+}
+
+let MemoItemComponent = connect(mapStateToProp, mapDispatchToProps)(MemoItem);
 export default MemoItemComponent;

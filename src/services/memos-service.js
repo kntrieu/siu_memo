@@ -13,7 +13,8 @@ import {
     addMemoError,
     setLoginPending,
     setLoginSuccess,
-    setLoginError
+    setLoginError,
+    setUnauhtorized
 } from '../actions';
 
 import {configObj} from "../configs";
@@ -44,92 +45,133 @@ export const fetchMemos = () => {
 }
 
 
-export const saveMemoItem = (memo) => {
+export const saveMemoItem = (memo, token) => {
     return dispatch => {
+
         dispatch(saveMemoPending());
-        fetch(baseUrl + '/memos/' + memo._id, {method: 'put', headers: {
-            'Content-Type': 'application/json',
-          }, body: JSON.stringify(memo)})
-        .then(res => res.json())
-        .then(res => {
-            if(res.error) {
-                throw(res.error);
+
+        memo.token = token;
+        
+        fetch(baseUrl + '/memos/' + memo._id, {
+            method: 'put', headers: {
+                'Content-Type': 'application/json',
+            }, body: JSON.stringify(memo)
+        }).then(res => {
+            if (!res.ok) {
+                throw (res.status);
             }
 
+            return res.json()
+        }).then(res => {
+            
             dispatch(saveMemoSuccess(res));
+
             return res;
-        })
-        .catch (error => {
+        }).catch(error => {
+
+            if (error === 401 || error === 403) {
+                dispatch(setUnauhtorized({error: error.message}));
+            }
+            
             dispatch(saveMemoError(error))
         })
+
+        
+        
     }
 }
 
 
-export const deleteMemoItem = (memo) => {
+export const deleteMemoItem = (memo, token) => {
     return dispatch => {
         dispatch(deleteMemoPending());
+        memo.token = token;
         fetch(baseUrl + '/memos/' + memo._id, {method: 'delete', headers: {
             'Content-Type': 'application/json',
           }, body: JSON.stringify(memo)})
-        .then(res => res.json())
         .then(res => {
-            if(res.error) {
-                throw(res.error);
+            if (!res.ok) {
+                throw (res.status);
             }
+
+            return res.json();
+        })
+        .then(res => {
 
             dispatch(deleteMemoSuccess(memo));
             return res;
         })
         .catch (error => {
+            if (error === 401 || error === 403) {
+                dispatch(setUnauhtorized({error: error.message}));
+            }
             dispatch(deleteMemoError(error))
         })
     }
 }
 
-export const addMemoItem = (memo) => {
+export const addMemoItem = (memo, token) => {
     return dispatch => {
         dispatch(addMemoPending());
-        fetch(baseUrl + '/memo', {method: 'post', headers: {
-            'Content-Type': 'application/json',
-          }, body: JSON.stringify(memo)})
-        .then(res => res.json())
+        memo.token = token;
+        fetch(baseUrl + '/memo', 
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                }, body: JSON.stringify(memo)})
         .then(res => {
-            if(res.error) {
-                throw(res.error);
-            }
 
+            if (!res.ok) {
+                throw (res.status);
+            } 
+
+            return res.json();
+        })
+        .then(res => {
             dispatch(addMemoSuccess(res));
             return res;
         })
         .catch (error => {
-            dispatch(addMemoError(error))
+            if (error === 401 || error === 403) {
+                dispatch(setUnauhtorized({error: error.message}));
+            }
+            dispatch(addMemoError({error: error.message}))
         })
     }
 }
 
 function callLoginApi(email, password, callback) {
-    setTimeout(() => {
-        if (email === 'admin@example.com' && password === 'admin') {
-            return callback(null);
-        } else {
-            return callback(new Error('Invalid email and password'));
+    fetch(baseUrl + '/login', {method: 'post', headers: {
+        'Content-Type': 'application/json',
+      }, body: JSON.stringify({email: email, password: password})})
+    .then(res => {
+        if (!res.ok) {
+            throw Error(res.statusText);
         }
-    }, 1000);
+        return res.json()
+    })
+    .then(res => {
+
+        if(res.error) {
+            return callback(res.error);
+        }
+
+        return callback(res);;
+    })
+    .catch (error => {
+        return callback({error: error});
+    })
 }
 
 export const login = (email, password) => {
     return dispatch => {
-      dispatch(setLoginPending(true));
-      dispatch(setLoginSuccess(false));
-      dispatch(setLoginError(null));
-  
-      callLoginApi(email, password, error => {
+      callLoginApi(email, password, res => {
         dispatch(setLoginPending(false));
-        if (!error) {
-          dispatch(setLoginSuccess(true));
+        if (!res.error) {
+          dispatch(setLoginSuccess(res));
         } else {
-          dispatch(setLoginError(error));
+          dispatch(setLoginError(res.error));
         }
       });
     }

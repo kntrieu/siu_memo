@@ -133,7 +133,7 @@ export const addMemoSuccess = (memo) => {
 
 export const addMemoError = (error) => {
     return {
-        type: actionTypes.ADD_MEMO_SUCCESS,
+        type: actionTypes.ADD_MEMO_ERROR,
         payload: error
     }
 }
@@ -168,18 +168,34 @@ export const setLoginPending = (isLoginPending) => {
     };
 }
 
-export const setLoginSuccess = (isLoginSuccess) => {
+export const setLoginSuccess = (res) => {
     return {
         type: actionTypes.SET_LOGIN_SUCCESS,
-        payload: isLoginSuccess
+        payload: res
     };
 }
 
 export const setLoginError = (loginError) => {
     return {
         type: actionTypes.SET_LOGIN_ERROR,
+        payload: true
+    };
+}
+
+export const setUnauhtorized = (loginError) => {
+    return {
+        type: actionTypes.UNAUTHORIZED,
         payload: loginError
     };
 }
+
+
+export const logout = () => {
+    return {
+        type: actionTypes.LOGOUT,
+        payload: null
+    };
+}
+
 
 
