@@ -11,7 +11,7 @@ import ErrorPopupContainer from './ErrorPopup';
 
 class App extends React.Component {
   componentWillMount() {
-    //Get login infor
+    //Get login infor from local storage and update the state.
     const loginInfo = JSON.parse(localStorage.getItem('memoLoginReducer'));
     if (loginInfo && typeof loginInfo === "object") {
       if (loginInfo.isLoginSuccess) {

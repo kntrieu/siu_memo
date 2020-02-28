@@ -1,7 +1,5 @@
 import actionTypes from './actionTypes';
 import MemoModel from '../models/MemoModel'
-import { act } from 'react-dom/test-utils';
-
 
 
 //Action creator

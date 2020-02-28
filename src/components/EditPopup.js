@@ -94,10 +94,8 @@ class EditPopup extends Component {
         if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
-                    <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} readOnly={true} type="text" placeholder="Enter creator's name" value={memo.from} />
-                    {/* <small id="contentValid" className="form-text text-danger">
-                        Please enter creator's name
-                    </small> */}
+                    <input id="from" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }}
+                        readOnly={true} type="text" placeholder="Enter creator's name" value={memo.from} />
                 </>
             )
         } else {
@@ -109,7 +107,8 @@ class EditPopup extends Component {
         if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
-                    <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }} type="text" placeholder="Enter Receiver's name" value={memo.to} />
+                    <input id="to" className="form-control" onChange={(event) => { this.onMemoChange(event, memo) }}
+                           type="text" placeholder="Enter Receiver's name" value={memo.to} />
                     { this.state.isInvalidReceiver ? <small className="form-text text-danger">Please enter receiver</small> : null }
                 </>
             )
