@@ -101,7 +101,7 @@ class EditPopup extends Component {
                 </>
             )
         } else {
-            return <h6>{memo ? "To: " + memo.from : ""}</h6>
+            return <h6>{memo ? "To: " + memo.to : ""}</h6>
         }
     }
 
