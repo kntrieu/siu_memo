@@ -17,6 +17,13 @@ class Login extends Component {
         }
     }
 
+    handleKeyPress (event) {
+        //submit login form
+        if (event.key === "Enter") {
+            this.handleClickLogin ();
+        }
+    }
+
     handleClickLogin () {
         let email = document.getElementById('inputEmail').value;
         let password = document.getElementById('inputPassword').value;
@@ -51,7 +58,7 @@ class Login extends Component {
                 <div className="col-12 login-form h-100">
                     <div className="login-form-content">
                         <div className="form-group">
-                            <input type="email" className="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" />
+                            <input type="email" onKeyPress={(event) => {this.handleKeyPress(event)}} className="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" />
 
                             { this.state.isInvalidEmail ? <small className="form-text">
                                 Please enter email
@@ -59,7 +66,7 @@ class Login extends Component {
                             
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" id="inputPassword" placeholder="Enter Password" />
+                            <input type="password" onKeyPress={(event) => {this.handleKeyPress(event)}} className="form-control" id="inputPassword" placeholder="Enter Password" />
                             { this.state.isInvalidPassword ? <small className="form-text">
                                 Please enter password
                             </small> : null }
