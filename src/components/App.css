@@ -3,7 +3,7 @@
   padding-right: 0px !important;
   overflow-x: hidden;
   position: fixed;
-  height: 100%;
+  height: calc(100% - 3px);
   overflow-y: auto;
   /* background-image: url('../images/board.jpg');
   background-size: cover;
@@ -12,12 +12,15 @@
 
 .siu-container .siu-navbar {
   background-color: #8a3bc4  !important;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
 }
 
 .siu-container .siu-dashboard {
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: 15px;
+  margin-top: 65px;
 }
 
 .siu-dashboard .siu-memo-list .siu-memo-item:hover {
@@ -89,4 +92,11 @@
 
 .welcome .btn-max-width .margin-auto {
   margin: auto;
+}
+
+#navbarToggleExternalContent {
+  margin-top: 55px;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
 }
