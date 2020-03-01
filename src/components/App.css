@@ -81,3 +81,12 @@
 .welcome .welcome-btn {
   width: 200px;
 }
+
+.welcome .btn-max-width .btn-300 {
+  width: 300px !important;
+  max-width: 300px !important;
+}
+
+.welcome .btn-max-width .margin-auto {
+  margin: auto;
+}

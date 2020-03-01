@@ -1,5 +1,5 @@
 import React from 'react';
-import MemoContainer from '../containers/MemoList';
+import MemoListContainer from '../components/MemoList';
 import EditPopupComponent from '../components/EditPopup';
 import NavbarComponent from '../components/Navbar'
 
@@ -8,7 +8,7 @@ function Dashboard () {
         <>
             <NavbarComponent/>
             <div className="siu-dashboard row">
-                <MemoContainer />
+                <MemoListContainer />
                 <EditPopupComponent/>
             </div>
         </>

@@ -21,7 +21,6 @@ class App extends React.Component {
       } else if (loginInfo.loginError) {
         this.props.setLoginError(loginInfo.loginError, false);
       }
-
     }
   }
 

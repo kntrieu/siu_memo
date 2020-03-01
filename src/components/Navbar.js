@@ -6,21 +6,28 @@ import MemoModel from '../models/MemoModel';
 import {logout} from '../actions'
 
 class Navbar extends Component {
+
+    //When clicking on "add new" button
     handleClickAddNew () {
+        //Create new blank memo from model
         let newMemo = new MemoModel({});
+
+        //Set creator
         newMemo.from = this.props.loginReducer.userInfo.fullname;
+
+        //Open add new memo modal
         this.props.showAddNewPopup(newMemo);
     }
 
+    //When click on "Logout" button
     handleSignout () {
         this.props.logout();
     }
 
     render () {
+
         let addNewMemoButton = "";
-
         let loginButton = "";
-
         let logoutButton = "";
         
         if (this.props.loginReducer.isLoginSuccess) {
@@ -33,13 +40,32 @@ class Navbar extends Component {
         }
 
         return (
-            <nav className="navbar navbar-dark navbar-expand-lg bg-success siu-navbar">
-                <a className="navbar-brand" href="/#">Simple Memo App</a>
-                <div className="btn-group" role="group">
-                    {addNewMemoButton} {logoutButton} {loginButton}
+            <>
+                <nav className="navbar navbar-dark navbar-expand-lg bg-success siu-navbar">
+                    <a className="navbar-brand" href="/#">Simple Memo Board</a>
+                    <div className="btn-group" role="group" className="d-none d-lg-block">
+                        {addNewMemoButton} {logoutButton} {loginButton}
+                    </div>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+                <div className="collapse" id="navbarToggleExternalContent">
+                    <div className="bg-light p-4">
+                        <ul className="nav justify-content-end">
+                            <li className="nav-item">
+                                {addNewMemoButton}
+                            </li>
+                            <li className="nav-item">
+                                {logoutButton}
+                            </li>
+                            <li className="nav-item">
+                                {loginButton}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                
-            </nav>
+            </>
         );
     }
 }
@@ -47,8 +73,8 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
     return {
-        navbar: state.navbar,
-        loginReducer: state.loginReducer
+        navbar: state.navbar, //get navbar state
+        loginReducer: state.loginReducer //get login info  state
     }
 }
 

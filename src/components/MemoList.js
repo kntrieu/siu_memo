@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import MemoItemComponent from '../components/MemoItem';
+import MemoItemComponent from './MemoItem';
 import {fetchMemos} from '../services/memos-service';
 import {getMemosError, getMemos, getMemosPending} from '../reducers/memos-reducer';
 import {bindActionCreators} from 'redux';
@@ -15,7 +15,9 @@ class MemoList extends Component {
 
     createMemoListItems () {
         let listItems = [];
-        listItems = this.props.memos.map((item) => {
+
+        //generate memo item and sort by created_date
+        listItems = this.props.memos.sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).map((item) => {
             return (
                 <div className="col-lg-3 col-sm-6 siu-memo-list" key={item._id}>
                     <MemoItemComponent memo={item}/>
