@@ -81,7 +81,7 @@ class EditPopup extends Component {
         if (memo && this.props.loginReducer.isLoginSuccess) {
             return (
                 <>
-                    <textarea id="content" className="form-control" placeholder="Enter memo content" onChange={(event) => {this.onMemoChange(event, memo)}} value={memo.content}></textarea>
+                    <textarea id="content" className="form-control memo-textarea-content" placeholder="Enter memo content" onChange={(event) => {this.onMemoChange(event, memo)}} value={memo.content}></textarea>
                     { this.state.isInvalidContent ? <small className="form-text text-danger">Please enter memo's content</small> : null }
                 </>
             );

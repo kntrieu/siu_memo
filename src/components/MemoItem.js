@@ -15,6 +15,12 @@ class MemoItem extends Component {
     constructor(props) {
         super(props);
     }
+
+    cutContent(string, limit) {
+        let ellipse = " ...";
+        return (string.length > limit) ? string.substr(0, limit-1) + ellipse : string;
+    }
+
     onMemoChange (event, memo) {
 
         let propertyName = event.target.id;
@@ -55,7 +61,7 @@ class MemoItem extends Component {
         }
         return (
             <>
-                <div className="siu-memo-item card" onClick={(event) => { this.handleClickMemo(event,this.props.memo) }}>
+                <div className="siu-memo-item card" title="Click to view more content.  " onClick={(event) => { this.handleClickMemo(event,this.props.memo) }}>
                     <div className="card-header">
                         <h5>{this.props.memo.name}</h5>
                         {closeButton}
@@ -65,7 +71,7 @@ class MemoItem extends Component {
                         <h6 className="card-subtitle mb-2 text-muted">Created date: {date_created}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">From: {from}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">To: {to}</h6>
-                        <div className="card-text">{this.props.memo.content}</div>
+                        <div className="card-text">{this.cutContent(this.props.memo.content, 50)}</div>
                     </div>
                 </div>
             </>

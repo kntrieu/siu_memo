@@ -100,3 +100,7 @@
   z-index: 2;
   width: 100%;
 }
+
+.memo-textarea-content {
+  height: 200px !important;
+}
