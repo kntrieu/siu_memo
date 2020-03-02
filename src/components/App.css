@@ -104,3 +104,7 @@
 .memo-textarea-content {
   height: 200px !important;
 }
+
+.memo-content {
+  white-space: pre-wrap;
+}

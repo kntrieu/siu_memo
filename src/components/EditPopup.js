@@ -86,7 +86,7 @@ class EditPopup extends Component {
                 </>
             );
         } else {
-            return <p>{memo ? memo.content : ""}</p>
+            return <p >{memo ? memo.content : ""}</p>
         }
     }
 
@@ -99,7 +99,7 @@ class EditPopup extends Component {
                 </>
             )
         } else {
-            return <h6>{memo ? "From: " + memo.from : ""}</h6>
+            return <h6 className="memo-content">{memo ? "From: " + memo.from : ""}</h6>
         }
     } 
 
